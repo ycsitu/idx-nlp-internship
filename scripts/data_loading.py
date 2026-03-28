@@ -1,8 +1,23 @@
-import mysql.connector
 import pandas as pd
-
+# connection with mysql.connector; currently not used
+'''
+import mysql.connector
 conn = mysql.connector.connect(
-    host='localhost', user='root', password='root', database='real_estate')
+    host='localhost',
+    user='root',
+    password='root',
+    database='real_estate'
+)
+
+'''
+
+from sqlalchemy import create_engine
+
+def get_conn():
+    engine = create_engine('mysql+pymysql://root:root@localhost:3306/real_estate')
+    return engine.connect()
+
+conn=get_conn()
 
 query = """
 SELECT L_ListingID, L_Address, L_City, L_Keyword2 as beds,

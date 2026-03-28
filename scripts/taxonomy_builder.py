@@ -4,7 +4,7 @@ from nltk.util import ngrams
 import pandas as pd
 import json
 
-path = "data/processed/listing_sample_50.csv"  #replace later
+path = "data/processed/listing_sample.csv"
 df = pd.read_csv(path, encoding= 'unicode_escape')
 nltk.download('punkt')
 
