@@ -28,7 +28,19 @@ class TextCleaner:
 
             # units
             'sqft': 'square feet',
-            'sf': 'square feet'
+            'sf': 'square feet',
+
+            # single digit numbers (technically not abbrevs :))
+            'one': '1',
+            'two': '2',
+            'three': '3',
+            'four': '4',
+            'five': '5',
+            'six': '6',
+            'seven': '7',
+            'eight': '8',
+            'nine': '9',
+            'ten': '10',
 
             }
         
@@ -54,6 +66,9 @@ class TextCleaner:
     def normalize_measurements(self, text):
         # 12,000 -> 12000
         text = re.sub(r'(\d),(\d)', r'\1\2', text)
+
+        # 12 000 -> 12000
+        text = re.sub(r'(\d) (\d)', r'\1\2', text)
         
         # sq ft, sq.ft., sqft, sf, sq feet - > square feet    
         text = re.sub(r'(\d+)\s*sqft', r'\1 square feet', text, flags=re.I) # check against init
@@ -100,7 +115,7 @@ class TextCleaner:
 cleaner = TextCleaner()
 df = pd.read_csv('data/processed/listing_sample.csv', encoding="unicode_escape")
 df['remarks'].apply(cleaner.clean_text)
-df.to_csv('data/processed/cleaned_remarks.csv', index=False)
+df.to_csv('data/processed/cleaned_listing.csv', index=False)
 
 # Use this to guide your cleaning strategy:
 profile = cleaner.profile_column(df, 'remarks')
