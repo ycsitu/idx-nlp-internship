@@ -1,5 +1,6 @@
 import pytest
 import json
+import pandas as pd
 
 def test_taxonomy_loaded():
     with open('data/processed/taxonomy.json') as f:
@@ -8,6 +9,6 @@ def test_taxonomy_loaded():
         assert all('id' in t and 'term' in t for t in tax['terms'])
         
 def test_sample_data_quality():
-    df = pd.read_csv('data/processed/listing_sample.csv')
+    df = pd.read_csv('data/processed/listing_sample_50.csv', encoding= 'unicode_escape') # replace
     assert len(df) >= 500
     assert df['remarks'].str.len().min() > 50 
